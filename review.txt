@@ -1,0 +1,7 @@
+Search and Filter
+
+1. register a listener on keyup
+2. @the handler 
+      get the value of input
+      filter the array of children(updating the state) !important
+      set the children of the list(updating the UI) !important
