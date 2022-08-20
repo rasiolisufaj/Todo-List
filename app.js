@@ -21,8 +21,8 @@ const generateTemplate = (todo) => {
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const todo = addForm.add.value.trim();
-  console.log(todo);
   todosElement.append(generateTemplate(todo));
+  e.target.reset();
 });
 
 // Delete todos
