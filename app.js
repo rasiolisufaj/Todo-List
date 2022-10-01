@@ -1,10 +1,11 @@
 // Adding todos
 const addForm = document.querySelector(".add");
+const editForm = document.querySelector(".edit");
 const todosElement = document.querySelector(".todos");
 const searchFieldElement = document.querySelector("#searchField");
 const todosChildren = todosElement.children;
 
-const URL_API = "https://crudcrud.com/api/cad7fae2d1074479942d8a45ffc9fe6b";
+const URL_API = "https://crudcrud.com/api/61e2743cfefe49c38a25b80743c25b3e";
 
 let todos = [];
 
@@ -17,6 +18,7 @@ async function getAllTodos() {
 
 getAllTodos().then((data) => {
   todos = data;
+  console.log(todos);
   displayAllTodos();
 });
 
@@ -26,7 +28,6 @@ function displayAllTodos() {
 
   todos.forEach((todo) => {
     const todoTemplate = generateTodoTemplate(todo);
-    console.log(todoTemplate);
     todosElement.append(todoTemplate);
   });
 }
@@ -35,11 +36,18 @@ function displayAllTodos() {
 const generateTodoTemplate = (todo) => {
   const li = document.createElement("li");
   const span = document.createElement("span");
-  const i = document.createElement("i");
+  const deleteIcon = document.createElement("i");
+  const editIcon = document.createElement("i");
   const input = document.createElement("input");
+  const iconsDiv = document.createElement("div");
   input.type = "hidden";
   input.value = todo._id;
-  let isDone = todo.isDone ? "isDone" : "notDone";
+  let isDone;
+  if (todo.isDone === false) {
+    isDone = "notDone";
+  } else {
+    isDone = "isDone";
+  }
   console.log(isDone);
   li.classList.add(
     "list-group-item",
@@ -49,28 +57,77 @@ const generateTodoTemplate = (todo) => {
     isDone
   );
   span.innerText = todo.title;
-  i.classList.add("far", "fa-trash-alt", "delete");
-  li.append(span, i, input);
+  editIcon.classList.add("fa-solid", "fa-pen-to-square", "edit");
+  deleteIcon.classList.add("far", "fa-trash-alt", "delete");
+  iconsDiv.append(editIcon, deleteIcon);
+  li.append(span, iconsDiv, input);
   return li;
 };
 
+// Function edit todo
+function editTodo() {}
+
+// Add todo
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  const todo = addForm.add.value.trim().toLowerCase();
-  todosElement.append(generateTodoTemplate(todo));
+  const todoTitle = addForm.add.value.trim().toLowerCase();
+  if (todoTitle.length == 0 && todoTitle.length > 40) {
+    alert("Todo must be filled out");
+    return false;
+  }
+  const todo = { title: todoTitle, isDone: false };
+  fetch(URL_API + "/todos/", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(todo),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      todos.push(data),
+        todosElement.append(generateTodoTemplate(data)),
+        console.log(todos);
+    });
   e.target.reset();
 });
 
-// Delete todos
+// Edit Todo Form
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const editTitle = editForm.edit.value.trim().toLowerCase();
+  console.log(editTitle);
+});
+
+// Edit Icon Click
+todosElement.addEventListener("click", (e) => {
+  if (e.target.classList.contains("edit")) {
+    addForm.classList.add("d-none");
+    editForm.classList.remove("d-none");
+    const id = e.target.parentElement.parentElement.children[2].value;
+    console.log(id);
+    fetch(URL_API + "/todos/" + id)
+      .then((res) => res.json())
+      .then((data) => {
+        (data.title = "travel to madrid"), console.log(data);
+      });
+  }
+});
+
+// Delete todo
 todosElement.addEventListener("click", (e) => {
   if (e.target.classList.contains("delete")) {
-    const id = e.target.parentElement.children[2].value;
+    addForm.classList.remove("d-none");
+    editForm.classList.add("d-none");
+    const id = e.target.parentElement.parentElement.children[2].value;
+    console.log(id);
     fetch(URL_API + "/todos/" + id, {
       method: "DELETE",
     })
       .then((res) => {
         if (res.status === 200) {
-          e.target.parentElement.remove();
+          e.target.parentElement.parentElement.remove();
         } else {
           throw new Error("Can not delete");
         }

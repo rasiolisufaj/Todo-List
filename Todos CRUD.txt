@@ -36,17 +36,22 @@ System implementation:  (System implementation)[Best if the solution is the fast
         1. Get the user input {todoTitle}
         2. Validate{notblank, not more than 40charachters}
         3. Create a todo at frontend
-            const todo = {title: todoTitle, date: new Date()}
+            const todo = {title: todoTitle, isDone : false}
         4. Create todo at backend
-            const rawResponse = await fetch('https://crudcrud.com/api/{myKey}/todos', {
+            fetch('https://crudcrud.com/api/{myKey}/todos', {
                 method: 'POST',
                 headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(todo)
+            }).then(newTodo => {
+                if status [check status]
+                todos.push(newTodo)
+                todosElement.append(generated(newTodo))
             });
-        5. save the response to get the Id
+       
+        5. sav the response to get the Id
 
             const newTodo = await rawResponse.json();
 

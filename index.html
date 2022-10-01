@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script
-      src="https://kit.fontawesome.com/4d515a562c.js"
+      src="https://kit.fontawesome.com/0e732ebea4.js"
       crossorigin="anonymous"
     ></script>
     <link
@@ -32,28 +32,41 @@
         </form>
       </header>
       <ul class="list-group mx-auto todos">
-        <li
+        <!-- <li
           class="list-group-item d-flex test justify-content-between align-items-center"
         >
           <span>play football</span>
-          <i class="far fa-trash-alt delete"></i>
+          <div>
+            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="far fa-trash-alt delete"></i>
+          </div>
         </li>
         <li
           class="list-group-item d-flex justify-content-between align-items-center"
         >
           <span>fix the bugs</span>
-          <i class="far fa-trash-alt delete"></i>
+          <div>
+            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="far fa-trash-alt delete"></i>
+          </div>
         </li>
         <li
           class="list-group-item d-flex justify-content-between align-items-center"
         >
           <span>eat some candy</span>
-          <i class="far fa-trash-alt delete"></i>
-        </li>
+          <div>
+            <i class="fa-solid fa-pen-to-square"></i>
+            <i class="far fa-trash-alt delete"></i>
+          </div>
+        </li> -->
       </ul>
       <form class="add text-center my-4">
         <label class="text-light mb-2">Add new todo...</label>
         <input type="text" name="add" class="form-control m-auto" />
+      </form>
+      <form class="edit text-center my-4 d-none">
+        <label class="text-light mb-2">Edit todo...</label>
+        <input type="text" name="edit" class="form-control m-auto" />
       </form>
     </div>
     <script src="app.js"></script>

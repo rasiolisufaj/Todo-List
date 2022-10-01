@@ -18,9 +18,15 @@ input[type="text"]:focus {
 .delete {
   cursor: pointer;
 }
+
 .isDone {
-  background-color: green;
+  background-color: green !important;
 }
 .notDone {
-  background-color: red !important;
+  background-color: rgb(100, 12, 12) !important;
+}
+
+.todos li i {
+  margin-left: 10px;
+  cursor: pointer;
 }
