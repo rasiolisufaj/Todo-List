@@ -3,9 +3,11 @@ const addForm = document.querySelector(".add");
 const editForm = document.querySelector(".edit");
 const todosElement = document.querySelector(".todos");
 const searchFieldElement = document.querySelector("#searchField");
+const editCheckboxEl = document.querySelector("input[name=edit-checkbox]");
 const todosChildren = todosElement.children;
+let selectedTodo;
 
-const URL_API = "https://crudcrud.com/api/61e2743cfefe49c38a25b80743c25b3e";
+const URL_API = "https://crudcrud.com/api/3b2ad312863942b3967e0288a9281401";
 
 let todos = [];
 
@@ -48,7 +50,6 @@ const generateTodoTemplate = (todo) => {
   } else {
     isDone = "isDone";
   }
-  console.log(isDone);
   li.classList.add(
     "list-group-item",
     "d-flex",
@@ -63,9 +64,6 @@ const generateTodoTemplate = (todo) => {
   li.append(span, iconsDiv, input);
   return li;
 };
-
-// Function edit todo
-function editTodo() {}
 
 // Add todo
 addForm.addEventListener("submit", (e) => {
@@ -93,12 +91,12 @@ addForm.addEventListener("submit", (e) => {
   e.target.reset();
 });
 
-// Edit Todo Form
-editForm.addEventListener("submit", (e) => {
-  e.preventDefault();
+// Function Get Data
+
+// Function edit todo
+function editTodo() {
   const editTitle = editForm.edit.value.trim().toLowerCase();
-  console.log(editTitle);
-});
+}
 
 // Edit Icon Click
 todosElement.addEventListener("click", (e) => {
@@ -106,13 +104,17 @@ todosElement.addEventListener("click", (e) => {
     addForm.classList.add("d-none");
     editForm.classList.remove("d-none");
     const id = e.target.parentElement.parentElement.children[2].value;
-    console.log(id);
-    fetch(URL_API + "/todos/" + id)
-      .then((res) => res.json())
-      .then((data) => {
-        (data.title = "travel to madrid"), console.log(data);
-      });
+
+    selectedTodo = todos.find((todo) => todo._id === id);
+    console.log(selectedTodo);
   }
+});
+
+// Edit Todo Form
+editForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  editTodo();
+  editForm.edit.value = ``;
 });
 
 // Delete todo
@@ -121,7 +123,6 @@ todosElement.addEventListener("click", (e) => {
     addForm.classList.remove("d-none");
     editForm.classList.add("d-none");
     const id = e.target.parentElement.parentElement.children[2].value;
-    console.log(id);
     fetch(URL_API + "/todos/" + id, {
       method: "DELETE",
     })
@@ -141,7 +142,6 @@ todosElement.addEventListener("click", (e) => {
 // Searching & Filtering Todos
 searchFieldElement.addEventListener("keyup", (e) => {
   const keyword = searchFieldElement.value.toLowerCase();
-  console.log(todosChildren.length);
   for (let index = 0; index < todosChildren.length; index++) {
     const liElement = todosChildren.item(index);
     if (!liElement.children[0].innerText.includes(keyword)) {
@@ -149,5 +149,14 @@ searchFieldElement.addEventListener("keyup", (e) => {
     } else {
       liElement.classList.remove("d-none");
     }
+  }
+});
+
+// Checkbox
+editCheckboxEl.addEventListener("change", () => {
+  if (editCheckboxEl.checked) {
+    console.log("Checkbox is checked..");
+  } else {
+    console.log("Checkbox is not checked..");
   }
 });

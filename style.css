@@ -30,3 +30,16 @@ input[type="text"]:focus {
   margin-left: 10px;
   cursor: pointer;
 }
+
+.edit-label {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 10px;
+}
+
+input[type="checkbox"] {
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+  background-color: green;
+}
