@@ -4,10 +4,11 @@ const editForm = document.querySelector(".edit");
 const todosElement = document.querySelector(".todos");
 const searchFieldElement = document.querySelector("#searchField");
 const editCheckboxEl = document.querySelector("input[name=edit-checkbox]");
+const editTitleElement = document.querySelector("#edit-title");
 const todosChildren = todosElement.children;
 let selectedTodo;
 
-const URL_API = "https://crudcrud.com/api/3b2ad312863942b3967e0288a9281401";
+const URL_API = "https://crudcrud.com/api/4d1c86664b924aa7bd735b252b2f6468";
 
 let todos = [];
 
@@ -69,7 +70,7 @@ const generateTodoTemplate = (todo) => {
 addForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const todoTitle = addForm.add.value.trim().toLowerCase();
-  if (todoTitle.length == 0 && todoTitle.length > 40) {
+  if (todoTitle.length == 0 || todoTitle.length > 30) {
     alert("Todo must be filled out");
     return false;
   }
@@ -95,7 +96,25 @@ addForm.addEventListener("submit", (e) => {
 
 // Function edit todo
 function editTodo() {
-  const editTitle = editForm.edit.value.trim().toLowerCase();
+  selectedTodo.title = editTitleElement.value;
+  selectedTodo.isDone = editCheckboxEl.value;
+  fetch(URL_API + "/todos/" + selectedTodo._id, {
+    method: "PUT",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      title: selectedTodo.title,
+      isDone: selectedTodo.isDone,
+    }),
+  })
+    .then((res) => {
+      if (res.status == 200) {
+        displayAllTodos();
+      }
+    })
+    .catch(console.error());
 }
 
 // Edit Icon Click
@@ -104,16 +123,20 @@ todosElement.addEventListener("click", (e) => {
     addForm.classList.add("d-none");
     editForm.classList.remove("d-none");
     const id = e.target.parentElement.parentElement.children[2].value;
-
     selectedTodo = todos.find((todo) => todo._id === id);
-    console.log(selectedTodo);
+    if (selectedTodo) {
+      editCheckboxEl.value = selectedTodo.isDone;
+      editTitleElement.value = selectedTodo.title;
+    }
   }
 });
 
 // Edit Todo Form
 editForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  editTodo();
+  if (selectedTodo) {
+    editTodo();
+  }
   editForm.edit.value = ``;
 });
 
