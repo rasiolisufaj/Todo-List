@@ -1,0 +1,60 @@
+System Features: (System Analise)[Best if the solution fits clients needs]
+    1. Create Todos
+    2. Show Todos
+    3. Update 1 TODO
+    4. Delete 1 TODO
+
+System Design:  (System Design)[Best if the solution stores less data]
+    1. Save all the todos in backend
+    
+    2. To Create a TODO -> make a POST request to /api/{key}/todos with body
+    3. To Show all  TODOS -> make a GET request to /api/{key}/todos
+    4. To Update a TODO -> make a PUT request to /api/{key}/todos/{todoId}
+    5. To Delete a TODO -> make a DELETE request to /api/{key}/todos/{todoId}
+
+
+System implementation:  (System implementation)[Best if the solution is the fastest]
+    [2. Show Todos]  
+        1. Get all the todos at the start of the program and save them into an array
+            let todos = [];
+            fetch('GET', 'https://crudcrud.com/api/{myKey}/todos')
+                .then();
+        2. Display all todos
+            clear the  TODOsContainerElement
+            create the HTML elements and attach them to the TODOsContainerElement 
+
+        3. Creating the HTML element for the todo
+            div
+                h1
+                input[hidden] value=todo.id
+                button X
+
+            addEventListener to the div .addEventListener('click', editTodo);
+
+    [1. Create Todos]
+        0.addEventListener to addButtonElement
+        1. Get the user input {todoTitle}
+        2. Validate{notblank, not more than 40charachters}
+        3. Create a todo at frontend
+            const todo = {title: todoTitle, isDone : false}
+        4. Create todo at backend
+            fetch('https://crudcrud.com/api/{myKey}/todos', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(todo)
+            }).then(newTodo => {
+                if status [check status]
+                todos.push(newTodo)
+                todosElement.append(generated(newTodo))
+            });
+       
+        5. sav the response to get the Id
+
+            const newTodo = await rawResponse.json();
+
+        6. add this newTodo to todosArray;
+
+        7. Update UI[call displayAllTodos()]
