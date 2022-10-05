@@ -5,10 +5,11 @@ const todosElement = document.querySelector(".todos");
 const searchFieldElement = document.querySelector("#searchField");
 const editCheckboxEl = document.querySelector("input[name=edit-checkbox]");
 const editTitleElement = document.querySelector("#edit-title");
+const addTodoBtnEl = document.querySelector(".addTodoBtn");
 const todosChildren = todosElement.children;
 let selectedTodo;
 
-const URL_API = "https://crudcrud.com/api/4d1c86664b924aa7bd735b252b2f6468";
+const URL_API = "https://crudcrud.com/api/9fd159a0572a42219d5f99ea546e514f";
 
 let todos = [];
 
@@ -92,12 +93,11 @@ addForm.addEventListener("submit", (e) => {
   e.target.reset();
 });
 
-// Function Get Data
-
 // Function edit todo
 function editTodo() {
   selectedTodo.title = editTitleElement.value;
   selectedTodo.isDone = editCheckboxEl.value;
+  console.log(selectedTodo.isDone);
   fetch(URL_API + "/todos/" + selectedTodo._id, {
     method: "PUT",
     headers: {
@@ -128,6 +128,18 @@ todosElement.addEventListener("click", (e) => {
       editCheckboxEl.value = selectedTodo.isDone;
       editTitleElement.value = selectedTodo.title;
     }
+    console.log(selectedTodo);
+  }
+});
+
+// Checkbox
+editCheckboxEl.addEventListener("change", () => {
+  if (editCheckboxEl.checked) {
+    editCheckboxEl.value = true;
+    console.log(selectedTodo);
+  } else {
+    editCheckboxEl.value = false;
+    console.log(selectedTodo);
   }
 });
 
@@ -175,11 +187,8 @@ searchFieldElement.addEventListener("keyup", (e) => {
   }
 });
 
-// Checkbox
-editCheckboxEl.addEventListener("change", () => {
-  if (editCheckboxEl.checked) {
-    console.log("Checkbox is checked..");
-  } else {
-    console.log("Checkbox is not checked..");
-  }
+// Add Todo Btn
+addTodoBtnEl.addEventListener("click", () => {
+  addForm.classList.remove("d-none");
+  editForm.classList.add("d-none");
 });

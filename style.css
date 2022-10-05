@@ -19,6 +19,28 @@ input[type="text"]:focus {
   cursor: pointer;
 }
 
+.space-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  margin-bottom: 10px;
+}
+
+.addTodoBtn {
+  background-color: inherit;
+  color: #fff;
+  padding: 6px 8px;
+  border: #fff 1px solid;
+  border-radius: 4px;
+  transition: background-color 0.3s ease-in;
+}
+
+.addTodoBtn:hover {
+  background-color: #dedede;
+  color: inherit;
+}
+
 .isDone {
   background-color: green !important;
 }

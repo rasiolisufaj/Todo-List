@@ -65,14 +65,17 @@
         <input type="text" name="add" class="form-control m-auto" />
       </form>
       <form class="edit text-center my-4 d-none">
-        <label class="text-light mb-2">Edit todo...</label>
+        <div class="space-between">
+          <label class="text-light mb-2">Edit todo...</label>
+          <button class="addTodoBtn">Add Todo...</button>
+        </div>
         <input
           id="edit-title"
           type="text"
           name="edit"
           class="form-control m-auto"
         />
-        <label class="text-light mb-2 edit-label">Done</label> <br />
+        <label class="text-light mb-2 edit-label">Is Done</label> <br />
         <input type="checkbox" name="edit-checkbox" id="edit-checkbox" />
       </form>
     </div>
