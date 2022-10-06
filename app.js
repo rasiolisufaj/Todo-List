@@ -9,7 +9,7 @@ const addTodoBtnEl = document.querySelector(".addTodoBtn");
 const todosChildren = todosElement.children;
 let selectedTodo;
 
-const URL_API = "https://crudcrud.com/api/9fd159a0572a42219d5f99ea546e514f";
+const URL_API = "https://crudcrud.com/api/4a08e278c85f4ce389c47d682d70c7ae";
 
 let todos = [];
 
@@ -96,7 +96,7 @@ addForm.addEventListener("submit", (e) => {
 // Function edit todo
 function editTodo() {
   selectedTodo.title = editTitleElement.value;
-  selectedTodo.isDone = editCheckboxEl.value;
+  selectedTodo.isDone = editCheckboxEl.checked;
   console.log(selectedTodo.isDone);
   fetch(URL_API + "/todos/" + selectedTodo._id, {
     method: "PUT",
