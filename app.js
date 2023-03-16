@@ -9,7 +9,7 @@ const addTodoBtnEl = document.querySelector(".addTodoBtn");
 const todosChildren = todosElement.children;
 let selectedTodo;
 
-const URL_API = "https://crudcrud.com/api/4a08e278c85f4ce389c47d682d70c7ae";
+const URL_API = "https://crudcrud.com/api/99d54b930f534507a6bf3a51d614280c";
 
 let todos = [];
 
@@ -133,15 +133,15 @@ todosElement.addEventListener("click", (e) => {
 });
 
 // Checkbox
-editCheckboxEl.addEventListener("change", () => {
-  if (editCheckboxEl.checked) {
-    editCheckboxEl.value = true;
-    console.log(selectedTodo);
-  } else {
-    editCheckboxEl.value = false;
-    console.log(selectedTodo);
-  }
-});
+// editCheckboxEl.addEventListener("change", () => {
+//   if (editCheckboxEl.checked) {
+//     editCheckboxEl.value = true;
+//     console.log(selectedTodo);
+//   } else {
+//     editCheckboxEl.value = false;
+//     console.log(selectedTodo);
+//   }
+// });
 
 // Edit Todo Form
 editForm.addEventListener("submit", (e) => {
